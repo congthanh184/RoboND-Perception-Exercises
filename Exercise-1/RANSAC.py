@@ -1,5 +1,6 @@
 # Import PCL module
 import pcl
+# from pcl_helper import *
 
 # Load Point Cloud file
 cloud = pcl.load_XYZRGB('tabletop.pcd')
@@ -40,7 +41,7 @@ seg.set_method_type(pcl.SAC_RANSAC)
 # Max distance for a point to be considered fitting the model
 # Experiment with different values for max_distance 
 # for segmenting the table
-max_distance = .01
+max_distance = .04
 seg.set_distance_threshold(max_distance)
 
 # Call the segment function to obtain set of inlier indices and model coefficients
@@ -50,10 +51,8 @@ inliers, coefficients = seg.segment()
 extracted_inliers = cloud_filtered.extract(inliers, negative=True)
 filename = 'extracted_inliers.pcd'
 pcl.save(extracted_inliers, filename)
-
 # Save pcd for table
 # pcl.save(cloud, filename)
-
 
 # Extract outliers
 
@@ -61,3 +60,31 @@ pcl.save(extracted_inliers, filename)
 # Save pcd for tabletop objects
 
 
+# white_cloud = XYZRGB_to_XYZ(cloud)
+# tree = white_cloud.make_kdtree()
+
+# ec = white_cloud.make_EuclideanClusterExtraction()
+
+# ec.set_ClusterTolerance(0.001)
+# ec.set_MinClusterSize(10)
+# ec.set_MaxClusterSize(250)
+
+# ec.set_SearchMethod(tree)
+# cluster_indices = ec.Extract()
+
+# cluster_color = get_color_list(len(cluster_indices))
+
+# color_cluster_point_list = []
+
+# for j, indices in enumerate(cluster_indices):
+# 	for i, indice in enumerate(indices):
+# 		color_cluster_point_list.append([white_cloud[indice][0], 
+# 										white_cloud[indice][1], 										
+# 										white_cloud[indice][2], 
+# 										rgb_to_float(cluster_color[j])])
+
+# cluster_cloud = pcl.PointCloud_PointXYZRGB()
+# cluster_cloud.from_list(color_cluster_point_list)
+
+# filename = 'clustered_cloud.pcd'
+# pcl.save(cluster_cloud, filename)
