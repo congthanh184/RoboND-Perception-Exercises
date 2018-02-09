@@ -23,14 +23,24 @@ def get_normals(cloud):
 if __name__ == '__main__':
     rospy.init_node('capture_node')
 
+    # models = [\
+    #    'beer',
+    #    'bowl',
+    #    'create',
+    #    'disk_part',
+    #    'hammer',
+    #    'plastic_cup',
+    #    'soda_can']
     models = [\
-       'beer',
-       'bowl',
-       'create',
-       'disk_part',
-       'hammer',
-       'plastic_cup',
-       'soda_can']
+        'create',
+        'biscuits',
+        'soap2',
+        'soap',
+        'glue',
+        'book',
+        'sticky_notes',
+        'snacks',
+        'eraser']
 
     # Disable gravity and delete the ground plane
     initial_setup()
@@ -38,8 +48,8 @@ if __name__ == '__main__':
 
     for model_name in models:
         spawn_model(model_name)
-
-        for i in range(15):
+        print 'current training model ', model_name
+        for i in range(150):
             # make five attempts to get a valid a point cloud then give up
             sample_was_good = False
             try_count = 0
